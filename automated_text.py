@@ -1,7 +1,22 @@
-import requests
 import schedule
 import time
 from phone_number import phone_number
+import json, requests
+
+api_key = "fdfc005bd0518bbed24908556023e295"
+city = "Houston"
+url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+api_key+"&units=imperial"
+
+
+request = requests.get(url)
+json = request.json()
+
+#variable declartion for the if statements
+temp_min = json.get("main").get("temp_min")
+temp_max = json.get("main").get("temp_max")
+humidity = json.get("main").get("humidity")
+
+wind_speed = json.get("wind").get("speed")
 
 
 class text_message:
@@ -11,86 +26,82 @@ class text_message:
         self.humidity = humidity
         self.phone_number = phone_number
 
-    def weather():
-        print("hello")
+    def send_message_monday():
 
-    def send_message_monday(self):
-
-        resp = requests.post('https://textbelt.com/text', {
+        resp = request.post('https://textbelt.com/text', {
             'phone': phone_number,
             'message': 'Good evening, please vacuum the entire house and conduct the daily evening cleaning tasks',
             'key': 'textbelt',
         })
         print(resp.json())
 
-    def send_message_tuesday(self):
+    def send_message_tuesday():
 
-        resp = requests.post('https://textbelt.com/text', {
+        resp = request.post('https://textbelt.com/text', {
             'phone': phone_number,
             'message': 'Clean all the bathrooms, master, guest and spare upstairs',
             'key': 'textbelt',
         })
         print(resp.json())
 
-    def send_message_wednesday(self):
+    def send_message_wednesday():
 
-        resp = requests.post('https://textbelt.com/text', {
+        resp = request.post('https://textbelt.com/text', {
             'phone': phone_number,
             'message': 'Dust everything - fans, mantel, tvs, etc.',
             'key': 'textbelt',
         })
         print(resp.json())
 
-    def send_message_thursday(self):
+    def send_message_thursday():
 
-        resp = requests.post('https://textbelt.com/text', {
+        resp = request.post('https://textbelt.com/text', {
             'phone': phone_number,
             'message': 'Mop all floors including bathroom areas',
             'key': 'textbelt',
         })
         print(resp.json())
 
-    def send_message_friday(self):
+    def send_message_friday():
 
-        resp = requests.post('https://textbelt.com/text', {
+        resp = request.post('https://textbelt.com/text', {
             'phone': phone_number,
             'message': 'Monthly chore, 1st = Wipe basboards and cabinets, 2nd = Clean stove and microwave, 3rd = Clean out fridge and freezer (garage and indoor) 4th = Clean windows inside and out',
             'key': 'textbelt',
         })
         print(resp.json())
 
-    def send_message_saturday(self):
+    def send_message_saturday():
 
-        resp = requests.post('https://textbelt.com/text', {
+        resp = request.post('https://textbelt.com/text', {
             'phone': phone_number,
             'message': 'Conduct the laundry for the week and complete any project you have been wanting to get done',
             'key': 'textbelt',
         })
         print(resp.json())
 
-    def send_message_sunday(self):
 
-        resp = requests.post('https://textbelt.com/text', {
-            'phone': phone_number,
-            'message': 'Today is the rest day, enjoy the day off',
-            'key': 'textbelt',
-        })
-        print(resp.json())
+        if temp_max > 80:
+            print("it's way too hot, stay inside")
+        elif humidity > 65:
+            print("Do not go outside, it's so humid it's bascailly raining lol")
+        elif temp_max < 78:
+            print("it's actually pretty nice out")
 
 
-schedule.every().monday.at("19:00").do(send_message_monday())
+    schedule.every().monday.at("19:00").do(send_message_monday())
 
-schedule.every().tuesday.at("19:00").do(send_message_tuesday())
+    schedule.every().tuesday.at("19:00").do(send_message_tuesday())
 
-schedule.every().wednesday.at("19:00").do(send_message_wednesday())
+    schedule.every().wednesday.at("19:00").do(send_message_wednesday())
 
-schedule.every().thursday.at("19:00").do(send_message_thursday())
+    schedule.every().thursday.at("19:00").do(send_message_thursday())
 
-schedule.every().friday.at("19:00").do(send_message_friday())
+    schedule.every().friday.at("19:00").do(send_message_friday())
 
-schedule.every().saturday.at("19:00").do(send_message_saturday())
+    schedule.every().monday.at("16:48").do(send_message_saturday())
 
-schedule.every().sunday.at("19:00").do(send_message_sunday())
+    #schedule.every().monday.at("16:13").do(send_message_sunday())
 
 while True:
     schedule.run_pending()
