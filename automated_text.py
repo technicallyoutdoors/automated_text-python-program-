@@ -3,7 +3,7 @@ import time
 from phone_number import phone_number
 import json, requests
 
-api_key = "fdfc005bd0518bbed24908556023e295"
+api_key = "REDACTED"
 city = "Houston"
 url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+api_key+"&units=imperial"
 
