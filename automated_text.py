@@ -3,9 +3,13 @@ import time
 from phone_number import phone_number
 import json, requests
 #must use a valid API key here
-api_key = "REDACTED"
+from weather_api_key import weather_api_key
+from text_api_key import text_api_key
+
+
+weather_api_key = weather_api_key
 city = "Houston"
-url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+api_key+"&units=imperial"
+url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+weather_api_key+"&units=imperial"
 
 
 request = requests.get(url)
@@ -19,21 +23,43 @@ humidity = json.get("main").get("humidity")
 wind_speed = json.get("wind").get("speed")
 
 
-class Text_message:
-    def __init__(self, temperature, humidity):
-        self.__init__
-        self.temperature = temperature
-        self.humidity = humidity
-        self.phone_number = phone_number
+# class Text_message:
+#     def __init__(self, temperature, humidity, phone_number):
+#         self.__init__
+#         self.temperature = temperature
+#         self.humidity = humidity
+#         self.phone_number = phone_number
 
-t1 = Text_message("85 degrees", "75percent")
+# t1 = Text_message(temp_max, humidity)
+# phone = Text_message(phone_number)
 
-print(t1.temperature)
-print(t1.humidity)
+def send_good_weather_message():
+    resp = requests.post('https://textbelt.com/text', {
+        'phone': phone_number,
+        'message': 'the weather is perfect, go take a walk',
+        'key': text_api_key,
+})
+    print(resp.json())
+
+def send_bad_weather_message():
+    resp = requests.post('https://textbelt.com/text', {
+        'phone': phone_number,
+        'message': 'the weather is not good, do not go outside',
+        'key': text_api_key,
+    })
+    print(resp.json())
+
+if temp_max > 65 < 75 and humidity < 70:
+    send_good_weather_message()
+else:
+    send_bad_weather_message()
+    
+    
+    
 
 def send_message_monday():
 
-    resp = request.post('https://textbelt.com/text', {
+    resp = requests.post('https://textbelt.com/text', {
         'phone': phone_number,
         'message': 'Good evening, please vacuum the entire house and conduct the daily evening cleaning tasks',
         'key': 'textbelt',
