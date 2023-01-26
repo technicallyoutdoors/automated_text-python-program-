@@ -1,6 +1,6 @@
 import schedule
 import time
-from phone_number import phone_number
+from phone import phone_number
 import json, requests
 #must use a valid API key here
 from weather_api_key import weather_api_key
