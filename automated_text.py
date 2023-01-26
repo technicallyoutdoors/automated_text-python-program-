@@ -2,7 +2,6 @@ import schedule
 import time
 from phone import phone_number
 import json, requests
-#must use a valid API key here
 from weather_api_key import weather_api_key
 from text_api_key import text_api_key
 
@@ -44,7 +43,7 @@ def send_good_weather_message():
 def send_bad_weather_message():
     resp = requests.post('https://textbelt.com/text', {
         'phone': phone_number,
-        'message': 'the weather is not good, do not go outside',
+        'message': 'the weather is not good, humidity isdo not go outside',
         'key': text_api_key,
     })
     print(resp.json())
