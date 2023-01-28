@@ -21,6 +21,16 @@ humidity = json.get("main").get("humidity")
 
 wind_speed = json.get("wind").get("speed")
 
+def send_weather_report():
+    resp = requests.post('https://textbelt.com/text', {
+        'phone': phone_number,
+        'message': 'The minimum temperature for today is ' + str(temp_min) + ' and the maximum is ' + str(temp_max) + '. You can also expect a humidity of ' + str(humidity) + 
+        ' and a wind speed of ' + str(wind_speed) + ' end of report',
+        'key': text_api_key, 
+        })
+    print(resp.json())
+
+schedule.every(1).minutes.do(send_weather_report)
 
 def send_good_weather_message():
     resp = requests.post('https://textbelt.com/text', {
@@ -44,7 +54,6 @@ if temp_max > 65 < 75 and humidity < 70:
     send_good_weather_message()
 else:
     send_bad_weather_message()
-    
     
 
 def send_message_monday():
