@@ -35,7 +35,7 @@ schedule.every(1).minutes.do(send_weather_report)
 def send_good_weather_message():
     resp = requests.post('https://textbelt.com/text', {
         'phone': phone_number,
-        'message': 'the weather is perfect, go take a walk',
+        'message': 'the weather is perfect, the high for today is' + str(temp_max) + 'go take a walk',
         'key': text_api_key,
 })
     print(resp.json())
@@ -125,6 +125,8 @@ def send_message_saturday():
 
     #schedule.every().monday.at("16:13").do(send_message_sunday())
 
-while True:
+schedule_is_on = True
+
+while schedule_is_on == True:
     schedule.run_pending()
     time.sleep(0)
