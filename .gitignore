@@ -2,3 +2,4 @@ text_api_key.py
 weather_api_key.py
 phone.py
 
+.DS_Store
